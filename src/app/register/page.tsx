@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { registerUser } from '@/services/auth';
 import { AuthError } from '@/types/auth';
-import { FaKaaba, FaRegEnvelope, FaLock, FaUser, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaKaaba, FaRegEnvelope, FaLock, FaUser, FaPhone, FaMapMarkerAlt, FaTicketAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 
@@ -15,7 +15,8 @@ export default function Register() {
     confirmPassword: '',
     fullname: '',
     phone: '',
-    address: ''
+    address: '',
+    referralCode: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -78,8 +79,15 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const { email, password, fullname, phone, address } = formData;
-      const registerData = { email, password, fullname, phone, address };
+      const { email, password, fullname, phone, address, referralCode } = formData;
+      const registerData = { 
+        email, 
+        password, 
+        fullname, 
+        phone, 
+        address,
+        ...(referralCode && { referralCode }) // Hanya kirim jika ada
+      };
       
       await registerUser(registerData);
       
@@ -289,6 +297,29 @@ export default function Register() {
                     required
                   />
                 </div>
+              </div>
+
+              {/* Referral Code Input */}
+              <div className="group">
+                <label htmlFor="referralCode" className="block text-sm font-medium text-gray-700 mb-2">
+                  Kode Referral
+                  <span className="text-xs text-gray-500 ml-1">(opsional)</span>
+                </label>
+                <div className="relative">
+                  <FaTicketAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-green-500 transition-colors duration-200" />
+                  <input
+                    type="text"
+                    id="referralCode"
+                    name="referralCode"
+                    value={formData.referralCode}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 text-gray-900 bg-white group-hover:border-green-500 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-200"
+                    placeholder="Masukkan kode referral (jika ada)"
+                  />
+                </div>
+                <p className="mt-1 text-xs text-gray-500">
+                  Masukkan kode referral jika Anda diundang oleh agen kami
+                </p>
               </div>
 
               <button

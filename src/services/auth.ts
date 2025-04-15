@@ -102,20 +102,34 @@ export const logoutUser = async (): Promise<void> => {
 };
 
 export const registerUser = async (data: RegisterData) => {
-  const response = await fetch(`${BASE_URL}/auth/register`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  try {
+    const response = await fetch(`${BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+        fullname: data.fullname,
+        phone: data.phone,
+        address: data.address,
+        ...(data.referralCode && { referralCode: data.referralCode }) // Hanya kirim jika ada
+      }),
+    });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new AuthError(error.message || 'Gagal melakukan registrasi');
+    if (!response.ok) {
+      const error = await response.json();
+      throw new AuthError(error.message || 'Gagal melakukan registrasi');
+    }
+
+    return response.json();
+  } catch (error) {
+    if (error instanceof AuthError) {
+      throw error;
+    }
+    throw new AuthError('Gagal melakukan registrasi');
   }
-
-  return response.json();
 };
 
 export const updateProfile = async (data: UpdateProfileData): Promise<User> => {

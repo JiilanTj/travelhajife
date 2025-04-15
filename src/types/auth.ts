@@ -68,6 +68,7 @@ export interface RegisterData {
   fullname: string;
   phone: string;
   address: string;
+  referralCode?: string;
 }
 
 export interface UpdateProfileData {

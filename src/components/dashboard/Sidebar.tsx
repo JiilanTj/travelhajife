@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { 
   FaUsers, FaPlane, FaMoneyBillWave, FaChartBar, 
   FaUsersCog, FaHandshake, FaUserTie, FaTachometerAlt, FaWallet, FaWhatsapp, FaPassport, FaBell,
-  FaComments, FaFileInvoiceDollar, FaPercent, FaUserPlus, FaPeopleCarry, FaNewspaper
+  FaComments, FaFileInvoiceDollar, FaPercent, FaUserPlus, FaPeopleCarry, FaNewspaper, FaMoneyCheck
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 
@@ -44,8 +44,10 @@ const menuItems: Record<UserRole, MenuItem[]> = {
   ],
   AGEN: [
     { icon: FaTachometerAlt, label: 'Dashboard', href: '/dashboard' },
-    { icon: FaUsersCog, label: 'Jamaah Saya', href: '/dashboard/my-jamaah' },
-    { icon: FaMoneyBillWave, label: 'Komisi', href: '/dashboard/commission' },
+    { icon: FaUsersCog, label: 'Jamaah Saya', href: '/dashboard/agent/my-jamaah' },
+    { icon: FaMoneyBillWave, label: 'Komisi', href: '/dashboard/agent/commission' },
+    { icon: FaMoneyCheck, label: 'Pencairan Komisi', href: '/dashboard/agent/withdrawals' },
+    { icon: FaHandshake, label: 'Manager Referral', href: '/dashboard/agent/referral' },
   ],
   MARKETING: [
     { icon: FaTachometerAlt, label: 'Dashboard', href: '/dashboard' },
