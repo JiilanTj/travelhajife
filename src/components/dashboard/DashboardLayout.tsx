@@ -35,7 +35,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                Al-Amin Travel
+                Grasindo Travel
               </span>
               <span className="text-[10px] text-gray-500 font-medium">
                 {tagline}

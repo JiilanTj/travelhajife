@@ -163,7 +163,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
         </div>
         <div className="text-center mt-3">
           <span className="text-xs text-gray-500">
-            Al-Amin Travel © {new Date().getFullYear()}
+            Grasindo Travel © {new Date().getFullYear()}
           </span>
           <div className="flex flex-col items-center justify-center mt-2 text-xs">
             <span className="text-gray-500 font-medium">Technology By</span>

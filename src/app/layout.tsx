@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: 'Al-Amin Travel',
+  title: 'Grasindo Travel',
   description: 'Portal layanan umrah terpercaya',
 };
 
