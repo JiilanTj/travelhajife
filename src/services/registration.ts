@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://api.palvis.my.id/api";
 
 interface RegistrationRequest {
   packageId: string;

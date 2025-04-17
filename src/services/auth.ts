@@ -9,7 +9,7 @@ import {
   RegisterData
 } from "@/types/auth";
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://api.palvis.my.id/api";
 
 export const loginUser = async (credentials: LoginCredentials): Promise<LoginResponse> => {
   try {

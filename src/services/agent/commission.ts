@@ -1,6 +1,6 @@
 import { CommissionResponse, PaymentRequestResponse, RequestPaymentPayload, RequestPaymentResponse, AvailableCommissionsResponse } from '@/types/agent';
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://api.palvis.my.id/api";
 
 export const getMyCommissions = async (): Promise<CommissionResponse> => {
   try {

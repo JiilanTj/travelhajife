@@ -1,6 +1,6 @@
 import { CreatePaymentRequest, PaymentResponse } from '@/types/payment';
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://api.palvis.my.id/api";
 
 export interface PaymentInfo {
   registration: {
