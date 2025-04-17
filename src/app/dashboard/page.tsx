@@ -5,6 +5,12 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 // Definisikan type untuk role
 type UserRole = 'SUPERADMIN' | 'ADMIN' | 'AGEN' | 'MARKETING' | 'JAMAAH';
 
+// Tambahkan interface untuk User
+interface User {
+  role: UserRole;
+  // Tambahkan property lain yang diperlukan
+}
+
 const roleGreetings: Record<UserRole, string> = {
   SUPERADMIN: 'Selamat datang, Super Admin!',
   ADMIN: 'Selamat datang, Admin!',
@@ -42,7 +48,8 @@ const roleSummaries: Record<UserRole, Array<{ label: string; value: string }>> =
 };
 
 export default function Dashboard() {
-  const { user, loading } = useAuth();
+  // Menentukan tipe untuk useAuth hook
+  const { user, loading } = useAuth() as { user: User | null, loading: boolean };
 
   if (loading || !user) return (
     <div className="min-h-screen flex items-center justify-center">
@@ -50,8 +57,10 @@ export default function Dashboard() {
     </div>
   );
 
-  const summaries = roleSummaries[user.role];
-  const greeting = roleGreetings[user.role];
+  // Memastikan user.role adalah UserRole yang valid
+  const userRole = user.role as UserRole;
+  const summaries = roleSummaries[userRole];
+  const greeting = roleGreetings[userRole];
 
   return (
     <DashboardLayout>
@@ -65,10 +74,10 @@ export default function Dashboard() {
             Berikut adalah ringkasan data Anda
           </p>
         </div>
-
+        
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {summaries.map((item, index) => (
+          {summaries.map((item: { label: string; value: string }, index: number) => (
             <div
               key={index}
               className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all duration-300 group"
@@ -82,7 +91,7 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-
+        
         {/* Recent Activity Section */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">
@@ -104,4 +113,4 @@ export default function Dashboard() {
       </div>
     </DashboardLayout>
   );
-} 
+}

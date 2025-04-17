@@ -132,7 +132,7 @@ export default function Register() {
               <FaKaaba className="w-8 h-8 text-green-600 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110" />
               <div className="flex flex-col">
                 <span className="font-bold text-xl bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">
-                  Al-Amin Travel
+                  Grasindo Travel
                 </span>
                 <span className="text-sm text-green-600 font-medium">
                   Melayani dengan Amanah

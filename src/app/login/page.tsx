@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/services/auth';
-import { AuthError } from '@/types/auth';
+import { AuthError, LoginResponse } from '@/types/auth';
 import { FaKaaba, FaRegEnvelope, FaLock } from 'react-icons/fa';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
@@ -21,9 +21,11 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await loginUser({ email, password });
+      // Menggunakan LoginResponse interface
+      const response = await loginUser({ email, password }) as LoginResponse;
 
-      if (response.data.token) {
+      // Memastikan data dan token ada
+      if (response.data?.token) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         
@@ -76,7 +78,7 @@ export default function Login() {
               <FaKaaba className="w-8 h-8 text-green-600 transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-110" />
               <div className="flex flex-col">
                 <span className="font-bold text-xl bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">
-                  Al-Amin Travel
+                  Grasindo Travel
                 </span>
                 <span className="text-sm text-green-600 font-medium">
                   Melayani dengan Amanah
@@ -214,4 +216,4 @@ export default function Login() {
       `}</style>
     </div>
   );
-} 
+}
