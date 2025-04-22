@@ -1,6 +1,6 @@
 import { AgentStatsResponse } from '@/types/agent';
 
-const BASE_URL = "https://api.palvis.my.id/api";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 export const getAgentStats = async (): Promise<AgentStatsResponse> => {
   try {

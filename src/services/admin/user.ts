@@ -74,7 +74,7 @@ export const getUsers = async (params: GetUsersParams = {}): Promise<PaginatedRe
     ...(sortOrder && { sortOrder }),
   });
 
-  const response = await fetch(`https://api.palvis.my.id/api/auth/users?${searchParams}`, {
+  const response = await fetch(`https://api.grasindotravel.id/api/auth/users?${searchParams}`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     },

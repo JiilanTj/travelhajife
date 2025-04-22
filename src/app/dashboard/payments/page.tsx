@@ -31,7 +31,7 @@ declare global {
   }
 }
 
-const BASE_URL = "https://api.palvis.my.id/api";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 interface PaymentInfo {
   registration: {
