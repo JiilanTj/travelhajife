@@ -1,6 +1,6 @@
 import { GenerateReferralResponse, ReferralError } from '@/types/agent';
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://api.grasindotravel.id/";
 
 interface CheckReferralResponse {
   success: boolean;
