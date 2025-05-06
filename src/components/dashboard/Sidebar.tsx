@@ -104,14 +104,22 @@ const menuItems: Record<UserRole, MenuItem[]> = {
 
 interface SidebarProps {
   userRole?: UserRole;
+  onCloseMobile?: () => void;
 }
 
-export default function Sidebar({ userRole }: SidebarProps) {
+export default function Sidebar({ userRole, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
   
   if (!userRole) return null;
 
   const items = menuItems[userRole];
+
+  const handleClick = () => {
+    // Close sidebar on mobile when clicking a link
+    if (onCloseMobile) {
+      onCloseMobile();
+    }
+  };
 
   return (
     <nav className="mt-4 pr-2">
@@ -121,6 +129,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
           <Link
             key={item.href}
             href={item.href}
+            onClick={handleClick}
             className={`flex items-center px-6 py-3 mx-3 mb-1 rounded-lg transition-all duration-300 ${
               isActive 
                 ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-md' 
@@ -144,6 +153,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
           </p>
           <Link 
             href="/dashboard/support" 
+            onClick={handleClick}
             className="flex items-center text-xs font-medium text-green-700 hover:text-green-800"
           >
             <FaWhatsapp className="w-3 h-3 mr-1" />
@@ -152,12 +162,14 @@ export default function Sidebar({ userRole }: SidebarProps) {
           <div className="mt-2">
             <Link 
               href="/dashboard/faq" 
+              onClick={handleClick}
               className="text-xs font-medium text-green-700 hover:text-green-800 mr-3"
             >
               FAQ
             </Link>
             <Link 
               href="/dashboard/help" 
+              onClick={handleClick}
               className="text-xs font-medium text-green-700 hover:text-green-800"
             >
               Panduan

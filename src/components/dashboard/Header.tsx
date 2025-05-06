@@ -25,7 +25,7 @@ export default function Header({ user, onLogout }: HeaderProps) {
   }, []);
 
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-4">
       {/* Notifications */}
       <button className="relative p-2 hover:bg-gray-50 rounded-full transition-all duration-300 group">
         <FaBell className="w-5 h-5 text-gray-600 group-hover:text-green-600" />
@@ -34,8 +34,8 @@ export default function Header({ user, onLogout }: HeaderProps) {
 
       {/* User Menu */}
       <div className="relative" ref={dropdownRef}>
-        <div className="flex items-center gap-4">
-          <div className="text-right">
+        <div className="flex items-center gap-2 lg:gap-4">
+          <div className="hidden lg:block text-right">
             <p className="text-sm font-semibold text-gray-700">{user?.fullname}</p>
             <p className="text-xs text-green-600 font-medium">{user?.role}</p>
           </div>
@@ -64,6 +64,12 @@ export default function Header({ user, onLogout }: HeaderProps) {
               : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}
           `}
         >
+          {/* Mobile-only user info */}
+          <div className="lg:hidden px-4 py-3 border-b border-gray-100">
+            <p className="text-sm font-semibold text-gray-900">{user?.fullname}</p>
+            <p className="text-xs text-green-600">{user?.role}</p>
+          </div>
+
           <div className="p-2">
             <button
               className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 rounded-md flex items-center gap-2 group transition-colors"

@@ -304,11 +304,11 @@ export default function UsersPage() {
           </div>
 
           {/* Search and Filter */}
-          <div className="mb-6 flex gap-4">
+          <div className="mb-6 flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative">
               <input
                 type="text"
-                placeholder="Cari berdasarkan nama, email, atau nomor telepon..."
+                placeholder="Cari pengguna..."
                 value={tempSearch}
                 onChange={(e) => setTempSearch(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -322,31 +322,34 @@ export default function UsersPage() {
                 Cari
               </button>
             </div>
-            <div className="relative">
-              <button 
-                onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className={`px-6 py-3 shadow-sm rounded-xl flex items-center gap-2 transition-colors ${
-                  filters.role || filters.isActive !== undefined || filters.sortBy !== 'createdAt' || filters.sortOrder !== 'DESC'
-                    ? 'bg-green-600 text-white hover:bg-green-700'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
+            <div className="flex gap-2">
+              <div className="relative flex-1 sm:flex-none">
+                <button 
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className={`w-full sm:w-auto px-6 py-3 shadow-sm rounded-xl flex items-center justify-center gap-2 transition-colors ${
+                    filters.role || filters.isActive !== undefined || filters.sortBy !== 'createdAt' || filters.sortOrder !== 'DESC'
+                      ? 'bg-green-600 text-white hover:bg-green-700'
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  <FaFilter className={filters.role || filters.isActive !== undefined ? 'text-white' : 'text-gray-500'} />
+                  Filter
+                  {(filters.role || filters.isActive !== undefined) && (
+                    <span className="w-2 h-2 rounded-full bg-white" />
+                  )}
+                </button>
+                
+                <FilterModal />
+              </div>
+              <button
+                onClick={handleCreateUser}
+                className="flex-1 sm:flex-none px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors shadow-sm flex items-center justify-center gap-2"
               >
-                <FaFilter className={filters.role || filters.isActive !== undefined ? 'text-white' : 'text-gray-500'} />
-                Filter
-                {(filters.role || filters.isActive !== undefined) && (
-                  <span className="w-2 h-2 rounded-full bg-white" />
-                )}
+                <FaUserPlus className="hidden sm:block" />
+                <span className="sm:hidden">Tambah</span>
+                <span className="hidden sm:block">Tambah Pengguna</span>
               </button>
-              
-              <FilterModal />
             </div>
-            <button
-              onClick={handleCreateUser}
-              className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors shadow-sm flex items-center gap-2"
-            >
-              <FaUserPlus />
-              Tambah Pengguna
-            </button>
           </div>
 
           {/* Table */}
@@ -360,22 +363,22 @@ export default function UsersPage() {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Nama
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Kontak
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Role
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Status
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Terdaftar
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th scope="col" className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Aksi
                       </th>
                     </tr>
@@ -390,38 +393,41 @@ export default function UsersPage() {
                     ) : (
                       users.map((user) => (
                         <tr key={user.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 sm:px-6 py-4">
                             <div className="flex items-center">
                               <div>
                                 <div className="text-sm font-medium text-gray-900">
                                   {user.fullname}
                                 </div>
+                                <div className="sm:hidden text-xs text-gray-500">
+                                  {user.email}
+                                </div>
                                 {user.nik && (
-                                  <div className="text-sm text-gray-500">
+                                  <div className="text-xs text-gray-500">
                                     NIK: {user.nik}
                                   </div>
                                 )}
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">{user.email}</div>
                             <div className="text-sm text-gray-500">{user.phone}</div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
                             {getRoleBadge(user.role)}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
                             {getStatusBadge(user.isActive)}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {new Date(user.createdAt).toLocaleDateString('id-ID', {
                               year: 'numeric',
                               month: 'short',
                               day: 'numeric'
                             })}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div className="flex space-x-2">
                               <button
                                 onClick={() => handleViewUser(user.id)}
@@ -445,14 +451,14 @@ export default function UsersPage() {
               </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between border-t px-6 py-4">
-                <p className="text-sm text-gray-500">
+              <div className="flex flex-col sm:flex-row items-center justify-between border-t px-4 sm:px-6 py-4 gap-4">
+                <p className="text-sm text-gray-500 order-2 sm:order-1">
                   Menampilkan {users.length} dari {totalItems} pengguna
-                  <span className="ml-1">
+                  <span className="hidden sm:inline ml-1">
                     (Item {((currentPage - 1) * ITEMS_PER_PAGE) + 1} - {Math.min(currentPage * ITEMS_PER_PAGE, totalItems)})
                   </span>
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 order-1 sm:order-2">
                   <button
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1}
@@ -462,28 +468,32 @@ export default function UsersPage() {
                   </button>
                   
                   {Array.from({ length: totalPages }, (_, i) => {
-                    // Tampilkan hanya 5 halaman sekitar halaman aktif
+                    // Show fewer pages on mobile
+                    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+                    const pagesToShow = isMobile ? 3 : 5;
+                    
                     if (
                       i + 1 === 1 ||
                       i + 1 === totalPages ||
-                      (i + 1 >= currentPage - 2 && i + 1 <= currentPage + 2)
+                      (i + 1 >= currentPage - Math.floor(pagesToShow/2) && 
+                       i + 1 <= currentPage + Math.floor(pagesToShow/2))
                     ) {
                       return (
                         <button
                           key={i + 1}
                           onClick={() => setCurrentPage(i + 1)}
-                          className={`min-w-[40px] h-10 rounded-lg ${
+                          className={`min-w-[32px] sm:min-w-[40px] h-8 sm:h-10 rounded-lg ${
                             currentPage === i + 1
                               ? 'bg-green-600 text-white font-medium shadow-sm'
                               : 'text-gray-600 hover:bg-gray-100'
-                          } transition-colors`}
+                          } transition-colors text-sm sm:text-base`}
                         >
                           {i + 1}
                         </button>
                       );
                     } else if (
-                      i + 1 === currentPage - 3 ||
-                      i + 1 === currentPage + 3
+                      i + 1 === currentPage - (Math.floor(pagesToShow/2) + 1) ||
+                      i + 1 === currentPage + (Math.floor(pagesToShow/2) + 1)
                     ) {
                       return <span key={i} className="px-1">...</span>;
                     }
