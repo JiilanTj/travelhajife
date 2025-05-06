@@ -1,6 +1,6 @@
 import { Package, PackageResponse } from "@/types/package";
 
-const BASE_URL = "https://api.grasindotravel.id/";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 interface GetPackagesParams {
   page?: number;

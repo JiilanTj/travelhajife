@@ -1,6 +1,6 @@
 import { Document, DocumentType, DocumentStatus } from '@/types/document';
 
-const BASE_URL = 'https://api.grasindotravel.id/';
+const BASE_URL = 'https://api.grasindotravel.id/api';
 
 export const getMyDocuments = async (): Promise<Document[]> => {
   try {

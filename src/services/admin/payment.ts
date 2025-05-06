@@ -1,7 +1,7 @@
 import { PaymentListItem } from '../payment';
 import { AdminPaymentListResponse, AdminPaymentFilters, AdminPaymentVerifyRequest, PaymentResponse, PaymentType, PaymentStatus } from '@/types/payment';
 
-const BASE_URL = "https://api.grasindotravel.id/";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 interface PaginatedResponse<T> {
   status: string;
@@ -62,7 +62,7 @@ export const getPayments = async (params: GetPaymentsParams = {}): Promise<Pagin
     ...(search && { search }),
   });
 
-  const response = await fetch(`https://api.grasindotravel.id//payments?${searchParams}`, {
+  const response = await fetch(`https://api.grasindotravel.id/api/payments?${searchParams}`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     },

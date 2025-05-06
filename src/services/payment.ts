@@ -1,6 +1,6 @@
 import { CreatePaymentRequest, PaymentResponse } from '@/types/payment';
 
-const BASE_URL = "https://api.grasindotravel.id/";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 export interface PaymentInfo {
   registration: {

@@ -1,6 +1,6 @@
 import { CommissionResponse, PaymentRequestResponse, RequestPaymentPayload, RequestPaymentResponse, AvailableCommissionsResponse } from '@/types/agent';
 
-const BASE_URL = "https://api.grasindotravel.id/";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 export const getMyCommissions = async (): Promise<CommissionResponse> => {
   try {

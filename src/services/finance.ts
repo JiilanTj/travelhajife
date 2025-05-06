@@ -1,6 +1,6 @@
 import { FinanceDashboardStats, PaymentResponse, CommissionPaymentResponse, PackageFinanceResponse } from '@/types/finance';
 
-const BASE_URL = "https://api.grasindotravel.id/";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 // Get finance dashboard statistics
 export const getFinanceDashboardStats = async (): Promise<FinanceDashboardStats> => {

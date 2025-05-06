@@ -9,7 +9,7 @@ import {
   RegisterData
 } from "@/types/auth";
 
-const BASE_URL = "https://api.grasindotravel.id/";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 export const loginUser = async (credentials: LoginCredentials): Promise<LoginResponse> => {
   try {
