@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FaPlus, FaEdit, FaTrash, FaNewspaper, FaSearch, FaSpinner, FaTimes, FaEye } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaEye, FaNewspaper, FaSearch, FaSpinner, FaTimes } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -127,6 +127,13 @@ export default function ContentManagementPage() {
   const handleEdit = (id: string) => {
     router.push(`/dashboard/admin/content/edit/${id}`);
   };
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+  const handleView = (id: string) => {
+    // TODO: Implement view functionality
+    toast.success('Membuka preview konten...');
+  };
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
   const handleCreateCategory = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -345,6 +352,13 @@ export default function ContentManagementPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{post.viewCount.toLocaleString()}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      <button
+                        onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
+                        className="text-blue-600 hover:text-blue-900"
+                        title="Lihat"
+                      >
+                        <FaEye className="w-4 h-4" />
+                      </button>
                       <button
                         onClick={() => handleEdit(post.id)}
                         className="text-emerald-600 hover:text-emerald-900"

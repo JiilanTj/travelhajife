@@ -1,15 +1,15 @@
 import { Package } from '@/types/package';
 import { FaPencilAlt, FaTrash, FaCalendarAlt, FaClock, FaUsers, FaStar, FaEye } from 'react-icons/fa';
 import Image from 'next/image';
-import Link from 'next/link';
 
 interface PackageCardProps {
   package: Package;
   onDelete: (id: string) => void;
   onEdit: (pkg: Package) => void;
+  onView: (pkg: Package) => void;
 }
 
-export default function PackageCard({ package: pkg, onDelete, onEdit }: PackageCardProps) {
+export default function PackageCard({ package: pkg, onDelete, onEdit, onView }: PackageCardProps) {
   const imageUrl = pkg.image?.url || '/placeholder.jpg';
   
   // Format date
@@ -46,12 +46,12 @@ export default function PackageCard({ package: pkg, onDelete, onEdit }: PackageC
         </div>
         {/* Action buttons - Kembali ke kanan atas */}
         <div className="absolute top-2 right-2 flex gap-2">
-          <Link
-            href={`/dashboard/packages/${pkg.id}`}
+          <button
+            onClick={() => onView(pkg)}
             className="p-2 bg-white/90 hover:bg-white rounded-lg text-gray-700 hover:text-blue-600 shadow-sm backdrop-blur-sm transition-all duration-200 group"
           >
             <FaEye className="w-4 h-4 transform group-hover:scale-110 transition-transform" />
-          </Link>
+          </button>
           <button
             onClick={() => onEdit(pkg)}
             className="p-2 bg-white/90 hover:bg-white rounded-lg text-gray-700 hover:text-green-600 shadow-sm backdrop-blur-sm transition-all duration-200 group"

@@ -6,6 +6,7 @@ import PackageCard from '@/components/packages/PackageCard';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';
 import PackageModal from '@/components/packages/PackageModal';
+import PackageViewModal from '@/components/packages/PackageViewModal';
 import { createPackage, updatePackage, deletePackage } from '@/services/package';
 import Swal from 'sweetalert2';
 import { toast } from 'react-hot-toast';
@@ -19,7 +20,9 @@ export default function PackagesPage() {
   const [totalItems, setTotalItems] = useState(0);
   const ITEMS_PER_PAGE = 12; // 3 rows x 4 columns = 12 items per page
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<Package | undefined>();
+  const [viewPackage, setViewPackage] = useState<Package | undefined>();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const defaultFilters = {
     type: '',
@@ -296,6 +299,11 @@ export default function PackagesPage() {
     );
   };
 
+  const handleView = (pkg: Package) => {
+    setViewPackage(pkg);
+    setIsViewModalOpen(true);
+  };
+
   return (
     <DashboardLayout>
       <div className="min-h-screen bg-gray-50/30">
@@ -370,6 +378,7 @@ export default function PackagesPage() {
                       setSelectedPackage(pkg);
                       setIsModalOpen(true);
                     }}
+                    onView={handleView}
                   />
                 ))}
               </div>
@@ -445,6 +454,17 @@ export default function PackagesPage() {
         initialData={selectedPackage}
         title={selectedPackage ? 'Edit Paket' : 'Tambah Paket Baru'}
       />
+
+      {viewPackage && (
+        <PackageViewModal
+          isOpen={isViewModalOpen}
+          onClose={() => {
+            setIsViewModalOpen(false);
+            setViewPackage(undefined);
+          }}
+          package={viewPackage}
+        />
+      )}
     </DashboardLayout>
   );
 } 

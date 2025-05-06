@@ -13,10 +13,11 @@ interface PackageFormData {
     name: string;
     type: 'UMROH' | 'HAJI';
     description: string;
-    price: number | undefined;  // Update tipe
-    duration: number | undefined;  // Update tipe
+    price: number | undefined;
+    dp: number | undefined;  // Tambah field dp
+    duration: number | undefined;
     departureDate: string;
-    quota: number | undefined;  // Update tipe
+    quota: number | undefined;
     facilities: string[];
 }
 
@@ -53,6 +54,7 @@ export default function PackageForm({ initialData, onSubmit, onCancel }: Package
     type: initialData?.type || 'UMROH',
     description: initialData?.description || '',
     price: initialData?.price ? Number(initialData.price) : undefined,
+    dp: initialData?.dp || undefined,  // Tambah initial value untuk dp
     duration: initialData?.duration || undefined,
     departureDate: initialData?.departureDate ? 
       new Date(initialData.departureDate).toISOString().split('T')[0] : '',
@@ -102,12 +104,29 @@ export default function PackageForm({ initialData, onSubmit, onCancel }: Package
     setLoading(true);
 
     try {
+      // Pastikan data yang akan dikirim sesuai dengan yang diharapkan
+      const dataToSend = {
+        ...formData,
+        type: formData.type,
+        price: formData.price?.toString(),
+        dp: formData.dp?.toString(),  // Tambah dp ke data yang dikirim
+        duration: formData.duration?.toString(),
+        quota: formData.quota?.toString(),
+      };
+
+      console.log('Form Data before sending:', formData);
+      console.log('Data to be sent:', dataToSend);
+
       const submitFormData = new FormData();
-      submitFormData.append('data', JSON.stringify(formData));
+      submitFormData.append('data', JSON.stringify(dataToSend));
       
       if (mainImage) {
         submitFormData.append('image', mainImage);
       }
+
+      // Log the actual data being sent
+      const jsonData = JSON.parse(submitFormData.get('data') as string);
+      console.log('Final data being sent:', jsonData);
 
       await onSubmit(submitFormData);
       toast.success('Paket berhasil disimpan');
@@ -258,7 +277,6 @@ export default function PackageForm({ initialData, onSubmit, onCancel }: Package
                 value={formData.price ? formatRupiah(formData.price.toString()) : ''}
                 onChange={handlePriceChange}
                 onKeyDown={(e) => {
-                  // Hanya izinkan angka dan tombol kontrol
                   if (
                     !/[0-9]/.test(e.key) && 
                     e.key !== 'Backspace' && 
@@ -276,6 +294,32 @@ export default function PackageForm({ initialData, onSubmit, onCancel }: Package
                 required
                 placeholder="Masukkan harga paket"
               />
+            </div>
+          </div>
+
+          <div className="col-span-2 md:col-span-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Down Payment (DP)
+              <span className="text-xs text-gray-500 ml-1">(dalam persen)</span>
+            </label>
+            <div className="relative">
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                value={formData.dp || ''}
+                onChange={e => setFormData(prev => ({ 
+                  ...prev, 
+                  dp: e.target.value ? Number(e.target.value) : undefined 
+                }))}
+                onKeyDown={handleNumberInput}
+                className={`${inputClassName} pr-8`}
+                required
+                min="1"
+                max="100"
+                placeholder="Masukkan persentase DP"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">%</span>
             </div>
           </div>
 
