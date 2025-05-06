@@ -5,7 +5,7 @@ import {
   ProcessPaymentResponse 
 } from '@/types/commission';
 
-const BASE_URL = "https://api.grasindotravel.id/api";
+const BASE_URL = "http://localhost:5000/api";
 
 // Get all commissions
 export const getAllCommissions = async (): Promise<CommissionsResponse> => {

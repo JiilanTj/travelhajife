@@ -34,13 +34,16 @@ const menuItems: Record<UserRole, MenuItem[]> = {
   ADMIN: [
     { icon: FaTachometerAlt, label: 'Dashboard', href: '/dashboard' },
     { icon: FaPlane, label: 'Manajemen Paket', href: '/dashboard/admin/packages' },
+    { icon: FaUsers, label: 'Manajemen User', href: '/dashboard/admin/users' },
     { icon: FaPassport, label: 'Manajemen Dokumen', href: '/dashboard/admin/documents' },
     { icon: FaFileInvoiceDollar, label: 'Manajemen Pembayaran', href: '/dashboard/admin/payments' },
     { icon: FaPeopleCarry, label: 'Manajemen Jamaah', href: '/dashboard/admin/jamaah' },
+    { icon: FaUserPlus, label: 'Manajemen Agen', href: '/dashboard/admin/agents' },
     { icon: FaPercent, label: 'Komisi & Afiliasi', href: '/dashboard/admin/commissions' },
     { icon: FaMoneyBillWave, label: 'Laporan Keuangan', href: '/dashboard/admin/finance' },
     { icon: FaChartBar, label: 'Laporan & Statistik', href: '/dashboard/admin/reports' },
     { icon: FaComments, label: 'Chat Support', href: '/dashboard/admin/support' },
+    { icon: FaNewspaper, label: 'Content Management', href: '/dashboard/admin/content' },
   ],
   AGEN: [
     { icon: FaTachometerAlt, label: 'Dashboard', href: '/dashboard' },

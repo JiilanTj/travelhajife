@@ -7,7 +7,7 @@ import {
   Agent
 } from '@/types/agent';
 
-const BASE_URL = "https://api.grasindotravel.id/api";
+const BASE_URL = "http://localhost:5000/api";
 
 export const createAgent = async (data: CreateAgentRequest): Promise<Agent> => {
   try {

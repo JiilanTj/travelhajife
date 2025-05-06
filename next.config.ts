@@ -13,6 +13,18 @@ const nextConfig: NextConfig = {
         hostname: 'api.palvis.my.id',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000',
+        pathname: '/public/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000',
+        pathname: '/uploads/**',
+      },
     ],
   },
 };
