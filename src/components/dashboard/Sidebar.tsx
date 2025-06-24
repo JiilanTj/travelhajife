@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { 
   FaUsers, FaPlane, FaMoneyBillWave, FaChartBar, 
   FaUsersCog, FaHandshake, FaUserTie, FaTachometerAlt, FaWallet, FaWhatsapp, FaPassport, FaBell,
-  FaComments, FaFileInvoiceDollar, FaPercent, FaUserPlus, FaPeopleCarry, FaNewspaper, FaMoneyCheck
+  FaComments, FaFileInvoiceDollar, FaPercent, FaUserPlus, FaPeopleCarry, FaNewspaper, FaMoneyCheck, FaImages
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 
@@ -30,6 +30,7 @@ const menuItems: Record<UserRole, MenuItem[]> = {
     { icon: FaChartBar, label: 'Laporan & Statistik', href: '/dashboard/admin/reports' },
     { icon: FaComments, label: 'Chat Support', href: '/dashboard/admin/support' },
     { icon: FaNewspaper, label: 'Content Management', href: '/dashboard/admin/content' },
+    { icon: FaImages, label: 'Gallery', href: '/dashboard/admin/gallery' },
   ],
   ADMIN: [
     { icon: FaTachometerAlt, label: 'Dashboard', href: '/dashboard' },
@@ -44,6 +45,7 @@ const menuItems: Record<UserRole, MenuItem[]> = {
     { icon: FaChartBar, label: 'Laporan & Statistik', href: '/dashboard/admin/reports' },
     { icon: FaComments, label: 'Chat Support', href: '/dashboard/admin/support' },
     { icon: FaNewspaper, label: 'Content Management', href: '/dashboard/admin/content' },
+    { icon: FaImages, label: 'Gallery', href: '/dashboard/admin/gallery' },
   ],
   AGEN: [
     { icon: FaTachometerAlt, label: 'Dashboard', href: '/dashboard' },
