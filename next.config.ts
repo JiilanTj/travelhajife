@@ -5,12 +5,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.palvis.my.id',
+        hostname: 'api.grasindotravel.id',
         pathname: '/public/**',
       },
       {
         protocol: 'https',
-        hostname: 'api.palvis.my.id',
+        hostname: 'api.grasindotravel.id',
         pathname: '/uploads/**',
       },
       {

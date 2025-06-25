@@ -1,6 +1,6 @@
 import { User, UserQueryParams, PaginatedResponse } from '@/types/user';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.grasindotravel.id/api';
 
 export const getUsers = async (params?: UserQueryParams): Promise<PaginatedResponse<User>> => {
   try {

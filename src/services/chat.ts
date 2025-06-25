@@ -1,6 +1,6 @@
 import { ConversationsResponse, MessagesResponse, SendMessageRequest, SendMessageResponse } from '@/types/chat';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.grasindotravel.id/api';
 
 export const getConversations = async (): Promise<ConversationsResponse> => {
   try {

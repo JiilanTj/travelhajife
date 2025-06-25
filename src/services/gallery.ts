@@ -7,7 +7,7 @@ import {
   UpdateGalleryData
 } from '@/types/gallery';
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = "https://api.grasindotravel.id/api";
 
 // Helper function to handle API errors
 const handleApiError = (status: number, message?: string) => {
