@@ -275,38 +275,38 @@ export default function GalleryPage() {
             <div className="bg-white rounded-xl shadow-sm p-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {galleryItems.map((item) => (
-                  <div 
-                    key={item.id} 
+                    <div 
+                      key={item.id} 
                     className="group relative"
-                  >
+                    >
                     <div className="w-full h-64 overflow-hidden rounded-lg bg-gray-100">
-                      {item.imageUrl && (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.name}
+                        {item.imageUrl && (
+                          <img
+                            src={item.imageUrl}
+                            alt={item.name}
                           className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
-                        />
-                      )}
-                    </div>
+                          />
+                        )}
+                      </div>
                     
                     {/* Overlay with actions */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 rounded-lg">
                       <div className="flex gap-2">
-                        <button
-                          onClick={() => {
-                            setSelectedItem(item);
-                            setIsModalOpen(true);
-                          }}
+                            <button
+                              onClick={() => {
+                                setSelectedItem(item);
+                                setIsModalOpen(true);
+                              }}
                           className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors"
-                        >
+                            >
                           <FaEdit className="w-5 h-5 text-blue-600" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(item.id)}
+                            </button>
+                            <button
+                              onClick={() => handleDelete(item.id)}
                           className="p-2 bg-white/90 rounded-full hover:bg-white transition-colors"
-                        >
+                            >
                           <FaTrash className="w-5 h-5 text-red-600" />
-                        </button>
+                            </button>
                       </div>
                     </div>
 

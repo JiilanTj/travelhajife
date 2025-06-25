@@ -3,19 +3,57 @@ export interface Commission {
   agentId: string;
   registrationId: string;
   packagePrice: string;
-  commissionRate: string;
-  commissionAmount: string;
-  status: string;
+  baseAmount: string;
+  bonusAmount: string;
+  totalAmount: string;
+  commissionAmount: string;  // Added
+  commissionRate: string;    // Added
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'PAID' | 'PROCESS' | 'DONE';
   paymentRequestId: string | null;
   paidAt: string | null;
   notes: string;
   createdAt: string;
   updatedAt: string;
-  jamaahId: string;
-  User: {
-    fullname: string;
+  User: {              // Added
+    id: string;
     email: string;
+    fullname: string;
+    phone: string;
     referralCode: string;
+  };
+  Registration: {
+    id: string;
+    userId: string;
+    packageId: string;
+    referralCode: string;
+    status: string;
+    mahramId: string | null;
+    mahramStatus: string | null;
+    roomType: string;
+    roomPreferences: {
+      preferredLocation: string;
+      specialNeeds: string;
+      tentSection: string | null;
+      dormitorySection: string | null;
+    };
+    roomMate: string | null;
+    specialRequests: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    User: {
+      id: string;
+      email: string;
+      fullname: string;
+      phone: string;
+    };
+    Package: {
+      id: string;
+      name: string;
+      type: string;
+      price: string;
+      departureDate: string;
+    };
   };
 }
 
@@ -77,4 +115,57 @@ export interface ProcessPaymentRequest {
 export interface ProcessPaymentResponse {
   status: string;
   data: CommissionPaymentRequest;
+}
+
+export interface CommissionResponse {
+  status: string;
+  data: {
+    commissions: Commission[];
+    stats: {
+      totalCommission: string;
+      pendingCommission: string;
+      paidCommission: string;
+      totalJamaah: number;
+    };
+  };
+}
+
+export interface PaymentRequestResponse {
+  status: string;
+  data: CommissionPaymentRequest[];
+  pagination: PaginationResponse;
+}
+
+export interface RequestPaymentPayload {
+  commissionIds: string[];
+  bankInfo: {
+    bankName: string;
+    accountNumber: string;
+    accountName: string;
+  };
+}
+
+export interface RequestPaymentResponse {
+  status: string;
+  message: string;
+  data: {
+    requestId: string;
+    amount: string;
+    commissionCount: number;
+  };
+}
+
+export interface AvailableCommissionsResponse {
+  status: string;
+  data: {
+    commissions: Commission[];
+    totalAvailable: string;
+    pagination: PaginationResponse;
+  };
+}
+
+export interface CommissionBankInfo {
+  bankName: string;
+  accountNumber: string;
+  accountName: string;
 } 

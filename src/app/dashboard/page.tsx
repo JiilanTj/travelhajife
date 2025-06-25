@@ -203,7 +203,9 @@ export default function Dashboard() {
               data = [
                 { label: 'Jamaah Saya', value: agentStats.data.totalJamaah.toString() },
                 { label: 'Total Komisi', value: `Rp ${agentStats.data.totalCommission}` },
-                { label: 'Next Tier', value: `${agentStats.data.nextTier.jamaahNeeded} jamaah lagi` },
+                { label: 'Next Tier', value: agentStats.data.nextTier 
+                  ? `${agentStats.data.nextTier.jamaahNeeded} jamaah lagi`
+                  : 'Tier Lebih tinggi' },
               ];
             }
             break;

@@ -97,10 +97,21 @@ export default function MyJamaahPage() {
                   <FaArrowUp className="w-6 h-6 text-green-600" />
                 </div>
               </div>
-              <h3 className="text-sm font-medium text-gray-500">Menuju {stats?.nextTier.name}</h3>
-              <p className="text-2xl font-bold text-gray-900 mt-2">
-                {stats?.nextTier.jamaahNeeded} Jamaah Lagi
-              </p>
+              {stats?.nextTier ? (
+                <>
+                  <h3 className="text-sm font-medium text-gray-500">Menuju {stats.nextTier.name}</h3>
+                  <p className="text-2xl font-bold text-gray-900 mt-2">
+                    {stats.nextTier.jamaahNeeded} Jamaah Lagi
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-sm font-medium text-gray-500">Status Tier</h3>
+                  <p className="text-2xl font-bold text-gray-900 mt-2">
+                    Tier Lebih tinggi
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Total Commission */}
@@ -118,20 +129,46 @@ export default function MyJamaahPage() {
           </div>
 
           {/* Next Tier Benefits */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Benefit Tier Selanjutnya - {stats?.nextTier.name}
-            </h2>
-            <p className="text-gray-600 mb-4">{stats?.nextTier.benefits.description}</p>
-            <ul className="space-y-2">
-              {stats?.nextTier.benefits.features.map((feature, index) => (
-                <li key={index} className="flex items-center text-gray-700">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {stats?.nextTier ? (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Benefit Tier Selanjutnya - {stats.nextTier.name}
+              </h2>
+              {typeof stats.nextTier.benefits === 'object' && 'description' in stats.nextTier.benefits ? (
+                // Handle object structure
+                <>
+                  <p className="text-gray-600 mb-4">{stats.nextTier.benefits.description}</p>
+                  <ul className="space-y-2">
+                    {stats.nextTier.benefits.features?.map((feature, index) => (
+                      <li key={index} className="flex items-center text-gray-700">
+                        <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : Array.isArray(stats.nextTier.benefits) ? (
+                // Handle array structure
+                <ul className="space-y-2">
+                  {stats.nextTier.benefits.map((benefit, index) => (
+                    <li key={index} className="flex items-center text-gray-700">
+                      <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          ) : (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Status Tier
+              </h2>
+              <p className="text-gray-600">
+                Selamat! Anda telah mencapai tier tertinggi. Nikmati semua benefit yang tersedia.
+              </p>
+            </div>
+          )}
 
           {/* Referred Jamaah List */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">

@@ -15,15 +15,46 @@ import {
   FaCalendarAlt, 
   FaVenusMars,
   FaCrown,
-  FaPercentage,
   FaUsers,
   FaStar,
   FaPlus,
   FaEdit,
   FaTrash,
-  FaTimes
+  FaTimes,
+  FaMoneyBillWave
 } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+
+const formatCurrency = (price: string | number) => {
+  // Handle undefined or null
+  if (price === undefined || price === null) {
+    console.warn('Received undefined or null price value');
+    return 'Rp0';
+  }
+
+  let numPrice: number;
+  
+  if (typeof price === 'string') {
+    // Remove any non-numeric characters except decimal point
+    const cleanPrice = price.replace(/[^0-9.]/g, '');
+    numPrice = parseFloat(cleanPrice);
+  } else {
+    numPrice = price;
+  }
+
+  // Handle NaN case
+  if (isNaN(numPrice)) {
+    console.warn('Invalid price value:', price);
+    return 'Rp0';
+  }
+
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(numPrice);
+};
 
 // Add TierForm component
 const TierForm = ({ 
@@ -38,13 +69,10 @@ const TierForm = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: tier?.name || '',
-    baseCommissionRate: tier?.baseCommissionRate || 0,
-    bonusRate: tier?.bonusRate || 0,
+    commissionAmount: tier?.commissionAmount ? parseFloat(tier.commissionAmount) : 0,
+    bonusAmount: tier?.bonusAmount ? parseFloat(tier.bonusAmount) : 0,
     minimumJamaah: tier?.minimumJamaah || 0,
-    benefits: {
-      description: tier?.benefits.description || '',
-      features: tier?.benefits.features.join('\n') || ''
-    }
+    benefits: tier?.benefits ? tier.benefits.join('\n') : ''
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,13 +81,10 @@ const TierForm = ({
     try {
       const data = {
         name: formData.name,
-        baseCommissionRate: Number(formData.baseCommissionRate),
-        bonusRate: Number(formData.bonusRate),
-        minimumJamaah: Number(formData.minimumJamaah),
-        benefits: {
-          description: formData.benefits.description,
-          features: formData.benefits.features.split('\n').filter(f => f.trim())
-        }
+        commissionAmount: formData.commissionAmount,
+        bonusAmount: formData.bonusAmount,
+        minimumJamaah: formData.minimumJamaah,
+        benefits: formData.benefits.split('\n').filter(f => f.trim())
       };
 
       if (tier) {
@@ -106,38 +131,38 @@ const TierForm = ({
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-                placeholder="Masukkan nama tier"
+                placeholder="Contoh: BRONZE, SILVER, GOLD"
                 required
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-1">
-                Base Commission Rate (%)
+                Komisi Tetap (Rp)
               </label>
               <input
                 type="number"
-                value={formData.baseCommissionRate}
-                onChange={(e) => setFormData({ ...formData, baseCommissionRate: parseFloat(e.target.value) })}
+                value={formData.commissionAmount}
+                onChange={(e) => setFormData({ ...formData, commissionAmount: parseFloat(e.target.value) })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-                placeholder="Masukkan base commission rate"
+                placeholder="Contoh: 200000"
                 required
                 min="0"
-                max="100"
+                step="1000"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-1">
-                Bonus Rate (%)
+                Bonus Tetap (Rp)
               </label>
               <input
                 type="number"
-                value={formData.bonusRate}
-                onChange={(e) => setFormData({ ...formData, bonusRate: parseFloat(e.target.value) })}
+                value={formData.bonusAmount}
+                onChange={(e) => setFormData({ ...formData, bonusAmount: parseFloat(e.target.value) })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-                placeholder="Masukkan bonus rate"
+                placeholder="Contoh: 50000"
                 required
                 min="0"
-                max="100"
+                step="1000"
               />
             </div>
             <div>
@@ -149,39 +174,20 @@ const TierForm = ({
                 value={formData.minimumJamaah}
                 onChange={(e) => setFormData({ ...formData, minimumJamaah: parseInt(e.target.value) })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-                placeholder="Masukkan minimum jamaah"
+                placeholder="Contoh: 5"
                 required
                 min="0"
               />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-900 mb-1">
-                Deskripsi Benefits
+                Benefits (satu per baris)
               </label>
               <textarea
-                value={formData.benefits.description}
-                onChange={(e) => setFormData({
-                  ...formData,
-                  benefits: { ...formData.benefits, description: e.target.value }
-                })}
+                value={formData.benefits}
+                onChange={(e) => setFormData({ ...formData, benefits: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-                placeholder="Masukkan deskripsi benefits"
-                rows={3}
-                required
-              />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-900 mb-1">
-                Fitur (satu per baris)
-              </label>
-              <textarea
-                value={formData.benefits.features}
-                onChange={(e) => setFormData({
-                  ...formData,
-                  benefits: { ...formData.benefits, features: e.target.value }
-                })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-                placeholder="Masukkan fitur-fitur (satu per baris)"
+                placeholder="Masukkan benefits (satu per baris)"
                 rows={5}
                 required
               />
@@ -431,7 +437,7 @@ const AgentForm = ({
                 <option value="">Pilih Tier Agent</option>
                 {tiers.map((tier) => (
                   <option key={tier.id} value={tier.id}>
-                    {tier.name} - {tier.baseCommissionRate}% Komisi
+                    {tier.name} - Komisi {formatCurrency(tier.commissionAmount)}
                   </option>
                 ))}
               </select>
@@ -604,15 +610,6 @@ export default function AdminAgentsPage() {
       month: 'long',
       year: 'numeric'
     });
-  };
-
-  const formatCurrency = (amount: string) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(parseFloat(amount));
   };
 
   const handleDeleteTier = async (id: string) => {
@@ -814,8 +811,8 @@ export default function AdminAgentsPage() {
                                     {agent.AgentTier?.name || '-'}
                                   </div>
                                   <div className="flex items-center mb-2">
-                                    <FaPercentage className="w-4 h-4 mr-2" />
-                                    Komisi: {agent.AgentTier?.baseCommissionRate}%
+                                    <FaMoneyBillWave className="w-4 h-4 mr-2" />
+                                    Komisi: {agent.AgentTier ? formatCurrency(agent.AgentTier.commissionAmount) : '-'}
                                   </div>
                                   <div className="flex items-center mb-2">
                                     <FaUsers className="w-4 h-4 mr-2" />
@@ -933,17 +930,16 @@ export default function AdminAgentsPage() {
                         <tr key={tier.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4">
                             <div className="text-sm font-medium text-gray-900">{tier.name}</div>
-                            <div className="text-sm text-gray-500">{tier.benefits.description}</div>
                           </td>
                           <td className="px-6 py-4">
                             <div className="text-sm text-gray-500">
                               <div className="flex items-center mb-1">
-                                <FaPercentage className="w-4 h-4 mr-2" />
-                                Base Rate: {tier.baseCommissionRate}%
+                                <FaMoneyBillWave className="w-4 h-4 mr-2" />
+                                Komisi: {formatCurrency(tier.commissionAmount)}
                               </div>
                               <div className="flex items-center">
                                 <FaStar className="w-4 h-4 mr-2" />
-                                Bonus Rate: {tier.bonusRate}%
+                                Bonus: {formatCurrency(tier.bonusAmount)}
                               </div>
                             </div>
                           </td>
@@ -958,7 +954,7 @@ export default function AdminAgentsPage() {
                           <td className="px-6 py-4">
                             <div className="text-sm text-gray-500">
                               <ul className="list-disc list-inside">
-                                {tier.benefits.features.map((feature: string, index: number) => (
+                                {tier.benefits.map((feature: string, index: number) => (
                                   <li key={index}>{feature}</li>
                                 ))}
                               </ul>

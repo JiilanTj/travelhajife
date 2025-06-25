@@ -8,28 +8,28 @@ export interface AgentTierBenefits {
 export interface AgentTier {
   id: string;
   name: string;
-  baseCommissionRate: string;
+  commissionAmount: string;
+  bonusAmount: string;
   minimumJamaah: number;
-  bonusRate: string;
-  benefits: AgentTierBenefits;
+  benefits: string[];
   createdAt: string;
   updatedAt: string;
 }
 
 export interface CreateAgentTierRequest {
   name: string;
-  baseCommissionRate: number;
+  commissionAmount: number;
+  bonusAmount: number;
   minimumJamaah: number;
-  bonusRate: number;
-  benefits: AgentTierBenefits;
+  benefits: string[];
 }
 
 export interface UpdateAgentTierRequest {
   name?: string;
-  baseCommissionRate?: number;
+  commissionAmount?: number;
+  bonusAmount?: number;
   minimumJamaah?: number;
-  bonusRate?: number;
-  benefits?: AgentTierBenefits;
+  benefits?: string[];
 }
 
 export interface AgentTierListResponse {
@@ -167,7 +167,7 @@ export interface ReferredJamaah {
 export interface NextTierInfo {
   name: string;
   jamaahNeeded: number;
-  benefits: {
+  benefits: string[] | {
     description: string;
     features: string[];
   };
@@ -177,6 +177,11 @@ export interface AgentStats {
   tier: string;
   totalJamaah: number;
   totalCommission: string;
+  currentCommission: {
+    base: string;
+    bonus: string;
+    total: string;
+  };
   nextTier: NextTierInfo;
   referredJamaah: ReferredJamaah[];
 }
@@ -187,9 +192,9 @@ export interface AgentStatsResponse {
 }
 
 export interface CommissionStats {
-  totalCommission: number;
-  pendingCommission: number;
-  paidCommission: number;
+  totalCommission: string;
+  pendingCommission: string;
+  paidCommission: string;
   totalJamaah: number;
 }
 

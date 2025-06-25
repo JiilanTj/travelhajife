@@ -1,4 +1,4 @@
-import { CommissionResponse, PaymentRequestResponse, RequestPaymentPayload, RequestPaymentResponse, AvailableCommissionsResponse } from '@/types/agent';
+import { CommissionResponse, PaymentRequestResponse, RequestPaymentPayload, RequestPaymentResponse, AvailableCommissionsResponse } from '@/types/commission';
 
 const BASE_URL = "http://localhost:5000/api";
 

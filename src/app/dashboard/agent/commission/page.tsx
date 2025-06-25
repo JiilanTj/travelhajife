@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { getMyCommissions } from '@/services/agent/commission';
-import { Commission, CommissionStats } from '@/types/agent';
+import { CommissionStats } from '@/types/agent';
+import { Commission } from '@/types/commission';
 import { formatCurrency } from '@/utils/format';
 import { FaCoins, FaClock, FaCheckCircle, FaUsers } from 'react-icons/fa';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -127,10 +128,13 @@ export default function CommissionPage() {
                       Harga Paket
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Rate Komisi
+                      Komisi Dasar
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Jumlah Komisi
+                      Bonus
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Total Komisi
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Status
@@ -140,7 +144,7 @@ export default function CommissionPage() {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {commissions.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-10 text-center">
+                      <td colSpan={7} className="px-6 py-10 text-center">
                         <FaCoins className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                         <h3 className="text-lg font-medium text-gray-900 mb-2">
                           Belum Ada Komisi
@@ -170,13 +174,16 @@ export default function CommissionPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {formatCurrency(parseFloat(commission.packagePrice))}
+                          {formatCurrency(commission.packagePrice)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {parseFloat(commission.commissionRate)}%
+                          {formatCurrency(commission.baseAmount)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {formatCurrency(parseFloat(commission.commissionAmount))}
+                          {formatCurrency(commission.bonusAmount)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {formatCurrency(commission.totalAmount)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <StatusBadge status={commission.status} />

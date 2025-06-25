@@ -77,7 +77,7 @@ export interface PaymentListItem {
       departureDate: string;
       price: number;
     };
-  };
+  } | null;
   verifier: {
     id: string;
     name: string;
@@ -102,8 +102,8 @@ interface RawPaymentData {
   dueAmount: string;
   dueDate: string;
   status: string;
-  Registration: {
-    Package: {
+  Registration?: {
+    Package?: {
       name: string;
       type: string;
       departureDate: string;
@@ -150,10 +150,36 @@ export const getMyPayments = async (): Promise<PaymentListItem[]> => {
     }
 
     // Transform string amounts to numbers with proper typing
-    const transformedData = data.data.map((payment: RawPaymentData) => ({
+    const transformedData = data.data.map((payment: RawPaymentData) => {
+      // Base payment data
+      const baseData = {
       ...payment,
       amount: parseFloat(payment.amount || '0') || 0,
       dueAmount: parseFloat(payment.dueAmount || '0') || 0,
+      };
+
+      // Check if Registration exists
+      if (!payment.Registration) {
+        return {
+          ...baseData,
+          Registration: null
+        };
+      }
+
+      // Check if Package exists
+      if (!payment.Registration.Package) {
+        return {
+          ...baseData,
+          Registration: {
+            ...payment.Registration,
+            Package: null
+          }
+        };
+      }
+
+      // If both exist, transform the data
+      return {
+        ...baseData,
       Registration: {
         ...payment.Registration,
         Package: {
@@ -161,7 +187,8 @@ export const getMyPayments = async (): Promise<PaymentListItem[]> => {
           price: parseFloat(payment.Registration.Package.price || '0') || 0
         }
       }
-    }));
+      };
+    });
 
     return transformedData;
   } catch (error) {

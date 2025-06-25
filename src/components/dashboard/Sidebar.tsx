@@ -53,7 +53,7 @@ const menuItems: Record<UserRole, MenuItem[]> = {
     { icon: FaMoneyBillWave, label: 'Komisi', href: '/dashboard/agent/commission' },
     { icon: FaMoneyCheck, label: 'Pencairan Komisi', href: '/dashboard/agent/withdrawals' },
     { icon: FaHandshake, label: 'Manager Referral', href: '/dashboard/agent/referral' },
-    { icon: FaComments, label: 'Chat Support', href: '/dashboard/admin/support' },
+    { icon: FaComments, label: 'Chat Support', href: '/dashboard/agent/support' },
   ],
   MARKETING: [
     { icon: FaTachometerAlt, label: 'Dashboard', href: '/dashboard' },
@@ -92,7 +92,7 @@ const menuItems: Record<UserRole, MenuItem[]> = {
       href: '/dashboard/notifications' 
     },
     { 
-      icon: FaWhatsapp, 
+      icon: FaComments, 
       label: 'Chat Support', 
       href: '/dashboard/support' 
     },

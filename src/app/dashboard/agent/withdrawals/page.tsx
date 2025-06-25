@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getAvailableCommissions, getMyPaymentRequests, requestPayment } from '@/services/agent/commission';
-import { AvailableCommission, PaymentRequest, CommissionBankInfo } from '@/types/agent';
+import { Commission, CommissionPaymentRequest, CommissionBankInfo } from '@/types/commission';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { formatCurrency } from '@/utils/format';
 import { FaMoneyCheck, FaHistory, FaSpinner, FaClock, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
@@ -62,9 +62,9 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 export default function WithdrawalsPage() {
   const [activeTab, setActiveTab] = useState<'available' | 'history'>('available');
-  const [commissions, setCommissions] = useState<AvailableCommission[]>([]);
+  const [commissions, setCommissions] = useState<Commission[]>([]);
   const [totalAvailable, setTotalAvailable] = useState<string>('0');
-  const [paymentRequests, setPaymentRequests] = useState<PaymentRequest[]>([]);
+  const [paymentRequests, setPaymentRequests] = useState<CommissionPaymentRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCommissions, setSelectedCommissions] = useState<string[]>([]);
   const [showRequestForm, setShowRequestForm] = useState(false);
@@ -78,7 +78,7 @@ export default function WithdrawalsPage() {
   // Calculate total selected amount
   const totalSelectedAmount = commissions
     .filter(commission => selectedCommissions.includes(commission.id))
-    .reduce((sum, commission) => sum + parseFloat(commission.commissionAmount), 0);
+    .reduce((sum, commission) => sum + parseFloat(commission.totalAmount), 0);
 
   useEffect(() => {
     fetchData();
@@ -407,7 +407,7 @@ export default function WithdrawalsPage() {
                             </div>
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-900">
-                            {formatCurrency(parseFloat(commission.commissionAmount))}
+                            {formatCurrency(commission.totalAmount)}
                           </td>
                           <td className="px-6 py-4">
                             <StatusBadge status={commission.status} />
