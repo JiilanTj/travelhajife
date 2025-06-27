@@ -15,6 +15,16 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'http',
+        hostname: 'api.grasindotravel.id',
+        pathname: '/public/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'api.grasindotravel.id',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'http',
         hostname: 'localhost',
         port: '5000',
         pathname: '/public/**',
